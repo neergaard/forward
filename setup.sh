@@ -6,11 +6,11 @@ read -p "Sherlock username: "  USERNAME
 
 read -p "Port to use (pick a random number in range 49152-65535): "  PORT
 
-read -p "Sherlock partition (default: rondror): "  PARTITION
-PARTITION=${PARTITION:-rondror}
+read -p "Sherlock partition (default: mignot): "  PARTITION
+PARTITION=${PARTITION:-mignot}
 
 read -p "Browser to use (default: /Applications/Safari.app/): "  BROWSER
-BROWSER=${partition:-"/Applications/Safari.app/"}
+BROWSER=${partition:-"C:\Program Files\Mozilla Firefox\firefox.exe"}
 
 MEM=20G
 
