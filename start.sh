@@ -58,4 +58,4 @@ ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N $MACHINE &
 
 sleep 5
 echo "== Connecting to notebook =="
-open -a "$BROWSER" http://localhost:$PORT
+"$BROWSER" http://localhost:$PORT

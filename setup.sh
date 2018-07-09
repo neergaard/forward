@@ -10,7 +10,7 @@ read -p "Sherlock partition (default: mignot): "  PARTITION
 PARTITION=${PARTITION:-mignot}
 
 read -p "Browser to use (default: /Applications/Safari.app/): "  BROWSER
-BROWSER=${partition:-"C:\Program Files\Mozilla Firefox\firefox.exe"}
+BROWSER=${partition:-"/usr/bin/firefox"}
 
 MEM=20G
 
