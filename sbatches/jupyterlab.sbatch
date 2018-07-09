@@ -8,4 +8,4 @@ cd $NOTEBOOK_DIR
 export PATH=/home/users/alexno/anaconda3/envs/tensorboard/bin:$PATH
 source activate $CONV_ENV
 
-jupyter notebook --no-browser --port=$PORT
+jupyter lab --no-browser --port=$PORT
