@@ -1,8 +1,8 @@
 #!/bin/bash
 
 PORT=$1
-NOTEBOOK_DIR=${2:-${HOME}}
-SCRIPT=${3:-"none"}
+NOTEBOOK_DIR=$2
+SCRIPT=$3
 echo $NOTEBOOK_DIR
 cd $NOTEBOOK_DIR
 
