@@ -58,7 +58,7 @@ command="sbatch
     --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
     --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
+    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT ${@:2}"
 
 echo ${command}
 ssh ${RESOURCE} ${command}
