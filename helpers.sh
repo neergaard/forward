@@ -45,7 +45,7 @@ function set_forward_script() {
 function check_previous_submit() {
 
     echo "== Checking for previous notebook =="
-    PREVIOUS=`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%R" -h`
+    PREVIOUS=`ssh ${RESOURCE} squeue --name=$NAME --user=$FORWARD_USERNAME -o "%R" -h`
     if [ -z "$PREVIOUS" -a "${PREVIOUS+xxx}" = "xxx" ]; 
         then
             echo "No existing ${NAME} jobs found, continuing..."
@@ -79,7 +79,7 @@ function get_machine() {
     while [[ $ALLOCATED == "no" ]]
       do
                                                                   # nodelist
-          MACHINE=`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%N" -h`
+          MACHINE=`ssh ${RESOURCE} squeue --name=$NAME --user=$FORWARD_USERNAME -o "%N" -h`
     
           if [[ "$MACHINE" != "" ]]
           then
@@ -97,12 +97,12 @@ function get_machine() {
     done
 
     echo $MACHINE
-    MACHINE="`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%R" -h`"
+    MACHINE="`ssh ${RESOURCE} squeue --name=$NAME --user=$FORWARD_USERNAME -o "%R" -h`"
     echo $MACHINE
 
     # If we didn't get a node...
-    if [[ "$MACHINE" != "sh"* ]]
-        then
+    if [[ "$MACHINE" != "$MACHINEPREFIX"* ]]
+    then	
         echo "Tried ${ATTEMPTS} attempts!"  1>&2
         exit 1
     fi
@@ -137,7 +137,12 @@ function setup_port_forwarding() {
     echo
     echo "== Setting up port forwarding =="
     sleep 5
-    echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
-    ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
-
+    if $ISOLATEDCOMPUTENODE
+    then 
+       echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
+       ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+    else
+       echo "ssh $DOMAINNAME -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &"
+       ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
+    fi
 }
